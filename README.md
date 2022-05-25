@@ -1,5 +1,5 @@
 # online_shop
-unfinished online shop project
+Django unfinished online shop project
 includes:
 - 'product-customer-order' backend logic (models);
 - Django admin tools for adding products and their images, setting prices and 'active' status, creating orders (some products are already there, as examples);
