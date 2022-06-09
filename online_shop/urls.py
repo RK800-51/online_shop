@@ -26,7 +26,7 @@ urlpatterns = [
     path('orders', include('orders.urls')),
     path('products', include('products.urls')),
     path('product_list', include('shop.urls'), name='product_list'),
-    path('cart', include('cart.urls'), name='cart'),
+    path('cart/', include('cart.urls'), name='cart'),
 ] \
                     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
                     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

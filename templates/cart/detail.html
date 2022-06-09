@@ -4,44 +4,81 @@
     Your shopping cart
 {% endblock %}
 {% block content %}
-    <h1>Your shopping cart</h1>
-    <table class="cart">
-        <thead>
-        <tr>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Remove</th>
-            <th>Unit price</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart %}
-            {% with product=item.product %}
-                <tr>
-                    <td>
-                        <a href="{{ product.get_absolute_url }}">
-                            <img src="{{ product.productimage_set.first.image.url }}">
-                        </a>
-                    </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td><a href="{% url 'cart_remove' product.id %}">Remove</a></td>
-                    <td class="num">${{ item.price }}</td>
-                    <td class="num">${{ item.total_price }}</td>
-                </tr>
-            {% endwith %}
-        {% endfor %}
-        <tr class="total">
-            <td>Total</td>
-            <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <p class="text-right">
-        <a href="{% url 'product_list' %}" class="button light">Continue shopping</a>
-        <a href="#" class="button">Checkout</a>
-    </p>
+<div>
+
+    <div class="user-form col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                    <h3 class="display-4 py-2 text-truncate">Your shopping cart</h3>
+                    <div class="px-2">
+                        <form action="{% url 'cart:checkout' %}" class="justify-content-center" method="post"> {% csrf_token %}
+                            <div class="form-group">
+                                <label class="sr-only">Name</label>
+                                <span class="form-error">{{ form.name.errors }}</span>
+                                <input type="text" class="form-control" name="{{ form.name.html_name }}" placeholder="Jane Doe"
+                                value="{{ request.POST.name }}">
+
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only">Phone</label>
+                                <span class="form-error">{{ form.phone.errors }}</span>
+                                <input type="text" class="form-control" name="{{ form.phone.html_name }}" placeholder="+7 905-00-001">
+
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">Order</button>
+                        </form>
+                    </div>
+    </div>
+
+    <div class="text-center" id="cart-table">
+            <table class='cart'>
+
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+                <th>Unit price</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for id in cart %}
+                    <div class='product-image-item'>
+
+                    </div>
+                    <div class="row">
+                        <tr>
+                            <td>
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ id.product_image.image.url }}">
+                                </a>
+                            </td>
+                            <td>{{ id.product_name }}</td>
+                            <td> {{ id.quantity }} </td>
+                            <td><a href="{% url 'cart:cart_remove' id.product_id %}">Remove</a></td>
+                            <td class="num">${{ id.product_price }}</td>
+                            <td class="num">${{ id.total_price }}</td>
+
+                        </tr>
+                    </div>
+                {% endfor %}
+
+            <tr class="total">
+                <td>Total</td>
+                <td colspan="1"></td>
+                <td class="num">{{ cart.get_total_amount }} шт.</td>
+                <td colspan="2"></td>
+                <td class="num">${{ cart.get_total_price }}</td>
+
+            </tr>
+            </tbody>
+        </table>
+        <p class="text-right">
+            <a href="{% url 'product_list' %}" class="button light">Continue shopping</a>
+            <a href="#" class="button">Checkout</a>
+        </p>
+    </div>
+</div>
 {% endblock %}
+
+<input type="text" class="form-control" name="{{ name }}" placeholder="Jane Doe">

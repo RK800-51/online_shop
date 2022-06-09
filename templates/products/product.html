@@ -41,19 +41,16 @@
                     </div>
                 </div>
                 <div>
-                    <form id="form_buying_product" class="form-inline" method="post">
-                        <input type="number" class="form-control">
+                    <form action="{% url 'cart:cart_add' product.id %}" id="form_buying_product" class="form-inline" method="post">
+                        {% csrf_token %}
+                        {{ cart_product_form }}
+
                         <div class="form-group">
-                            <form action="{% url 'cart_add' product.id %}" method="post">
-                                {{ cart_product_form }}
-                                {% csrf_token %}
-                                <button class="btn btn-success btn-buy" type="submit"
-                                data-product_id="{{ product.id }}"
-                                data-name="{{ product.name }}"
-                                data-price="{{ product.price }}">
-                                    Добавить в корзину
+
+                                <button class="btn btn-success btn-buy" type="submit">
+                                Добавить в корзину
                                 </button>
-                            </form>
+
                         </div>
                     </form>
                 </div>
@@ -62,3 +59,6 @@
     </div>
 
 {% endblock content %}
+
+<input type="number" class="form-control"  name="quantity" value="{{ product.id }}">
+                        <input type="number" class="form-control" name="cart_product" value="{{ product.id }}">

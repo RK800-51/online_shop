@@ -80,3 +80,20 @@ html, body {
 .bg {
     background-color: #e3f2fd;
 }
+
+.cart {
+    border: 4px double #333;
+    border-collapse: separate;
+    border-spacing: 7px 11px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    margin-top: -200px;
+
+}
+
+#cart-table {
+    margin-top: -50px;
+}
+
+

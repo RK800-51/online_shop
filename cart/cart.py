@@ -1,9 +1,9 @@
 from decimal import Decimal
 from django.conf import settings
-from products.models import Product
+from products.models import Product, ProductImage
 
 
-class Cart(object):
+class Cart:
 
     def __init__(self, request):
         """
@@ -16,16 +16,12 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, product, quantity=1, update_quantity=False):
+    def add(self, product, quantity):
         # add product to cart or update its quantity
         product_id = str(product.id)
         if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 0,
-                                     'price': str(product.price)}
-        if update_quantity:
-            self.cart[product_id]['quantity'] = quantity
-        else:
-            self.cart[product_id]['quantity'] += 1
+            self.cart[product_id] = {'quantity': 0, 'price': str(product.price)}
+        self.cart[product_id]['quantity'] += quantity
         self.save()
 
     def save(self):
@@ -47,11 +43,15 @@ class Cart(object):
         # getting product objects and adding them to cart
         products = Product.objects.filter(id__in=product_ids)
         for product in products:
-            self.cart[str(product.id)]['product'] = product
+            self.cart[str(product.id)]['product_name'] = product.name
+            self.cart[str(product.id)]['product_price'] = float(product.price)
+            self.cart[str(product.id)]['product_id'] = int(product.id)
+            self.cart[str(product.id)]['product_image'] = ProductImage.objects.filter(product=product).first()
 
         for item in self.cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
+            item['product_price'] = float(item['product_price'])
+            item['total_price'] = float(item['product_price'] * item['quantity'])
+            item['product_id'] = int(item['product_id'])
             yield item
 
     def __len__(self):
@@ -62,6 +62,10 @@ class Cart(object):
         # total price of all products
         return sum(Decimal(item['price']) * item['quantity'] for item in
                    self.cart.values())
+
+    def get_total_amount(self):
+        # total amount of products
+        return sum(Decimal(item['quantity']) for item in self.cart.values())
 
     def clear(self):
         # deleting cart from session
