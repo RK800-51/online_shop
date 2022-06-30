@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Your shopping cart
+    Ваша корзина
 {% endblock %}
 {% block content %}
 <div>
 
-    <div class="user-form col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
-                    <h3 class="display-4 py-2 text-truncate">Your shopping cart</h3>
+    <div class="user-form col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4" id="order-form">
+                    <h3 class="display-4 py-2 text-truncate">Ваша корзина</h3>
                     <div class="px-2">
                         <form action="{% url 'cart:checkout' %}" class="justify-content-center" method="post"> {% csrf_token %}
                             <div class="form-group">
@@ -33,12 +33,12 @@
 
             <thead>
             <tr>
-                <th>Image</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Remove</th>
-                <th>Unit price</th>
-                <th>Price</th>
+                <th>Изображение</th>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Удаление</th>
+                <th>Цена за ед.</th>
+                <th>Общая цена</th>
             </tr>
             </thead>
             <tbody>
@@ -74,11 +74,10 @@
             </tbody>
         </table>
         <p class="text-right">
-            <a href="{% url 'product_list' %}" class="button light">Continue shopping</a>
-            <a href="#" class="button">Checkout</a>
+            <a href="{% url 'product_list' %}" class="button light">Продолжить покупки</a>
+
         </p>
     </div>
 </div>
 {% endblock %}
 
-<input type="text" class="form-control" name="{{ name }}" placeholder="Jane Doe">

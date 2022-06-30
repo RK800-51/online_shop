@@ -88,12 +88,22 @@ html, body {
     width: 80%;
     margin: auto;
     text-align: center;
-    margin-top: -200px;
 
 }
 
 #cart-table {
-    margin-top: -50px;
+    padding-top: -10px;
 }
 
+#checkout {
+    margin-left: 23%; /* Отступ слева */
+    width: 53%; /* Ширина слоя */
+    padding: 10px; /* Поля вокруг текста */
+    margin-bottom: 20%;
+}
 
+#btn-continue {
+    position: absolute;
+    bottom: 500px;
+    left: 700px !important;
+}

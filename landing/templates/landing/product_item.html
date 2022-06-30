@@ -15,10 +15,15 @@
              {{ product_image.product.description|truncatechars_html:50 }}
          </p>
          <p>{{ product_image.product.price }} USD</p>
-         <div class="add-to-cart-btn">
-             <button type="button" class="btn btn-success">
-                 Добавить в корзину
-             </button>
-         </div>
+         <form action="{% url 'cart:cart_add' product_image.product.id %}" id="form_buying_product" class="form-inline" method="post">
+             {% csrf_token %}
+             <input type="hidden" value="1" name="quantity"/>
+
+            <div class="add-to-cart-btn">
+                <button type="submit" class="btn btn-success">
+                    Добавить в корзину
+                </button>
+            </div>
+         </form>
      </div>
  </div>

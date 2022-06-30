@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Thank you for shopping!
+{% endblock %}
+
+{% block content %}
+
+<div class="form-group" id="checkout">
+  <h6 class="display-4 py-2 text-truncate">Thank you! Order picking started!</h6>
+<a href="{% url 'product_list' %}">
+  <button class="btn btn-success btn-buy" type="submit" id="btn-continue">
+    Continue shopping
+  </button>
+  </a>
+</div>
+{% endblock %}

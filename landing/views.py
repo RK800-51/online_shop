@@ -2,6 +2,7 @@ from django.shortcuts import render
 from datetime import datetime
 from .forms import SubscribeForm
 from products.models import Product, ProductImage
+from cart.forms import CartAddProductForm
 
 # Create your views here.
 
@@ -14,6 +15,7 @@ def landing(request):
 
 
 def home(request):
+    cart_product_form = CartAddProductForm()
     products_images = ProductImage.objects.filter(is_active=True, is_main=True, product__is_active=True)
     products_images_phones = products_images.filter(product__category__id=1)
     product_images_laptops = products_images.filter(product__category__id=2)
